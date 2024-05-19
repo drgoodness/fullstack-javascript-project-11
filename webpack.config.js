@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
 import autoprefixer from 'autoprefixer';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -10,6 +11,7 @@ export default {
   output: {
     filename: 'main.js',
     path: path.resolve(dirname, 'dist'),
+    clean: true,
   },
   devServer: {
     static: path.resolve(dirname, 'dist'),
@@ -45,4 +47,9 @@ export default {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+  ],
 };
