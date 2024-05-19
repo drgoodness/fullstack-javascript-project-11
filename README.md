@@ -1,2 +1,4 @@
-### Hexlet tests and linter status:
-[![Actions Status](https://github.com/drgoodness/fullstack-javascript-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/drgoodness/fullstack-javascript-project-11/actions)
+# rss-reader
+[![Hexlet | Actions Status](https://github.com/drgoodness/fullstack-javascript-project-11/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/drgoodness/fullstack-javascript-project-11/actions)
+[![Node CI | Actions Status](https://github.com/drgoodness/fullstack-javascript-project-11/actions/workflows/node-ci.yml/badge.svg)](https://github.com/drgoodness/fullstack-javascript-project-11/actions)
+[![Codeclimate | Maintainability](https://api.codeclimate.com/v1/badges/c1ffc7f828a3e8280462/maintainability)](https://codeclimate.com/github/drgoodness/fullstack-javascript-project-11/maintainability)

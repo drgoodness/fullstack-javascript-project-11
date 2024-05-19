@@ -1,0 +1,32 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "rss-reader",
+  "main": "src/js/main.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drgoodness/fullstack-javascript-project-4.git"
+  },
+  "author": "drgoodness",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drgoodness/fullstack-javascript-project-4/issues"
+  },
+  "homepage": "https://github.com/drgoodness/fullstack-javascript-project-4#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "css-loader": "^7.1.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "postcss-loader": "^8.1.1",
+    "sass": "^1.77.2",
+    "sass-loader": "^14.2.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}
