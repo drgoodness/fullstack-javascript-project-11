@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-        <title>RSS Reader</title>
+        <title>RSS агрегатор</title>
     </head>
     <body class="d-flex flex-column min-vh-100">
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
@@ -23,10 +23,21 @@
         </div>
         <main class="flex-grow-1">
             <section class="container-fluid bg-dark p-5">
+                <div class="row justify-content-end">
+                    <div class="col-1">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" id="languageDropdownMenuButton" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Язык</button>
+                            <div class="dropdown-menu" aria-labelledby="languageDropdownMenuButton">
+                                <a class="dropdown-item" href="#" data-language="ru">Русский</a>
+                                <a class="dropdown-item" href="#" data-language="en">English</a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-10 col-lg-8 mx-auto text-white">
-                        <h1 class="display-3 mb-0">RSS агрегатор</h1>
-                        <p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p>
+                        <h1 class="display-3 mb-0" id="header">RSS агрегатор</h1>
+                        <p class="lead" id="description">Начните читать RSS сегодня! Это легко, это красиво.</p>
                         <form action="" class="rss-form text-body">
                             <div class="row">
                                 <div class="col">
@@ -40,22 +51,36 @@
                                 </div>
                             </div>
                         </form>
-                        <p class="mt-2 mb-0 text-secondary">Пример: https://lorem-rss.hexlet.app/feed</p>
+                        <p class="mt-2 mb-0 text-secondary" id="example">Пример: https://lorem-rss.hexlet.app/feed</p>
                         <p class="feedback m-0 position-absolute small text-danger"></p>
                     </div>
                 </div>
             </section>
-            <section class="container-fluid container-xxl p-5">
+            <section class="container-fluid container-xxl p-5 d-none" id="feedsAndPosts">
                 <div class="row">
-                    <div class="col-md-10 col-lg-8 order-1 mx-auto posts"></div>
-                    <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds"></div>
+                    <div class="col-md-10 col-lg-8 order-1 mx-auto posts">
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <h2 class="card-title h4">Посты</h2>
+                            </div>
+                            <ul class="list-group border-0 rounded-0" id="posts"></ul>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-lg-4 mx-auto order-0 order-lg-1 feeds">
+                        <div class="card border-0">
+                            <div class="card-body">
+                                <h2 class="card-title h4">Фиды</h2>
+                            </div>
+                            <ul class="list-group border-0 rounded-0" id="feeds"></ul>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
         <footer class="footer border-top py-3 mt-5 bg-light">
             <div class="container-xl">
-                <div class="text-center">
-                    created by <a href="https://github.com/drgoodness" target="_blank">drgoodness</a>
+                <div class="text-center" id="createdBy">
+                    разработано <a href="https://github.com/drgoodness" target="_blank">drgoodness</a>
                 </div>
             </div>
         </footer>

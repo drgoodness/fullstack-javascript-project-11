@@ -1,4 +1,5 @@
 env:
+  browser: true
   es2021: true
   jest: true
 extends: 
@@ -9,3 +10,5 @@ parserOptions:
 rules:
   no-console: off
   import/extensions: off
+  max-len: off
+  max-classes-per-file: off
