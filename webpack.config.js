@@ -7,6 +7,7 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default {
+  mode: process.env.NODE_ENV || 'development',
   entry: './src/js/main.js',
   output: {
     filename: 'main.js',
