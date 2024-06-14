@@ -67,6 +67,12 @@ const loadRss = (rssLink) => {
         case rssStates.existentUrl:
           watchedState.rss = rssStates.existentUrl;
           break;
+        case rssStates.invalidRssResource:
+          watchedState.rss = rssStates.invalidRssResource;
+          break;
+        case rssStates.networkError:
+          watchedState.rss = rssStates.networkError;
+          break;
         default:
           watchedState.rss = rssStates.invalidUrl;
       }

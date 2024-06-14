@@ -64,6 +64,8 @@ const feedbackMapping = {
   invalidUrl: () => feedbackMappingFunc('feedback.invalidUrl'),
   emptyUrl: () => feedbackMappingFunc('feedback.emptyUrl'),
   existentUrl: () => feedbackMappingFunc('feedback.existentUrl'),
+  invalidRssResource: () => feedbackMappingFunc('feedback.invalidRssResource'),
+  networkError: () => feedbackMappingFunc('feedback.networkError'),
 };
 
 const renderHeader = () => {
