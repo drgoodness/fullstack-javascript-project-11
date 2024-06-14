@@ -76,7 +76,7 @@ const loadRss = (rssLink) => {
 
 elements.addButton.addEventListener('click', (e) => {
   e.preventDefault();
-  const rss = elements.inputField.value;
+  const rss = elements.inputField.value.trim();
   loadRss(rss);
 });
 
