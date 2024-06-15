@@ -1,6 +1,9 @@
 import {
-  Feed, Post, RSS, rssStates,
-} from './model.js';
+  rssStates,
+} from './model/index.js';
+import RSS from './model/RSS.js';
+import Post from './model/Post.js';
+import Feed from './model/Feed.js';
 
 const domParser = new DOMParser();
 

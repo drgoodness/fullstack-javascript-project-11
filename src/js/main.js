@@ -5,7 +5,7 @@ import * as bootstrap from 'bootstrap';
 import * as yup from 'yup';
 import onChange from 'on-change';
 import { elements, render } from './view.js';
-import { rssStates, languages, state } from './model.js';
+import { rssStates, languages, state } from './model/index.js';
 import fetchRss from './http.js';
 import getRss from './parser.js';
 
@@ -95,7 +95,7 @@ const loadNewPosts = () => {
         const rss = getRss(rssXml, rssLink);
         rss.posts.forEach((post) => {
           const foundPosts = Array.from(state.posts)
-            .filter((storedPost) => (storedPost.rssLink === post.rssLink) && (storedPost.link === post.link));
+            .filter((p) => (p.rssLink === post.rssLink) && (p.link === post.link));
           if (foundPosts.length === 0) {
             watchedState.posts.add(post);
             addEventListenersToViewButtons();

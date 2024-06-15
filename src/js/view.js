@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import resources from './locales/lang.js';
-import { state } from './model.js';
+import { state } from './model/index.js';
 
 const getI18NInstance = async () => {
   const i18nInstance = i18n.createInstance();
@@ -56,16 +56,16 @@ const renderFeedback = (text, success = false) => {
   elements.feedback.textContent = text;
 };
 
-const feedbackMappingFunc = (namespace, success = false) => renderFeedback(i18nInstance.t(namespace), success);
+const fbMapFunc = (ns, success = false) => renderFeedback(i18nInstance.t(ns), success);
 
 const feedbackMapping = {
   init: () => {},
-  added: () => feedbackMappingFunc('feedback.addedUrl', true),
-  invalidUrl: () => feedbackMappingFunc('feedback.invalidUrl'),
-  emptyUrl: () => feedbackMappingFunc('feedback.emptyUrl'),
-  existentUrl: () => feedbackMappingFunc('feedback.existentUrl'),
-  invalidRssResource: () => feedbackMappingFunc('feedback.invalidRssResource'),
-  networkError: () => feedbackMappingFunc('feedback.networkError'),
+  added: () => fbMapFunc('feedback.addedUrl', true),
+  invalidUrl: () => fbMapFunc('feedback.invalidUrl'),
+  emptyUrl: () => fbMapFunc('feedback.emptyUrl'),
+  existentUrl: () => fbMapFunc('feedback.existentUrl'),
+  invalidRssResource: () => fbMapFunc('feedback.invalidRssResource'),
+  networkError: () => fbMapFunc('feedback.networkError'),
 };
 
 const renderHeader = () => {
