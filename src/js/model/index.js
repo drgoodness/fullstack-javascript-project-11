@@ -13,15 +13,6 @@ const languages = {
   ru: 'ru',
 };
 
-const state = {
-  language: languages.ru,
-  rss: rssStates.init,
-  feeds: new Set(),
-  posts: new Set(),
-  currentPostLink: '',
-  viewedPostLinks: new Set(),
-};
-
 export {
-  rssStates, languages, state,
+  rssStates, languages,
 };

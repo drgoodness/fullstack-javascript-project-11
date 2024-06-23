@@ -1,19 +1,3 @@
-import i18n from 'i18next';
-import resources from './locales/lang.js';
-import { state } from './model/index.js';
-
-const getI18NInstance = async () => {
-  const i18nInstance = i18n.createInstance();
-  await i18nInstance.init({
-    lng: state.language,
-    debug: false,
-    resources,
-  });
-  return i18nInstance;
-};
-
-const i18nInstance = await getI18NInstance();
-
 const elements = {
   title: document.querySelector('title'),
   languageButton: document.querySelector('#languageDropdownMenuButton'),
@@ -56,19 +40,17 @@ const renderFeedback = (text, success = false) => {
   elements.feedback.textContent = text;
 };
 
-const fbMapFunc = (ns, success = false) => renderFeedback(i18nInstance.t(ns), success);
-
 const feedbackMapping = {
   init: () => {},
-  added: () => fbMapFunc('feedback.addedUrl', true),
-  invalidUrl: () => fbMapFunc('feedback.invalidUrl'),
-  emptyUrl: () => fbMapFunc('feedback.emptyUrl'),
-  existentUrl: () => fbMapFunc('feedback.existentUrl'),
-  invalidRssResource: () => fbMapFunc('feedback.invalidRssResource'),
-  networkError: () => fbMapFunc('feedback.networkError'),
+  added: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.addedUrl'), true),
+  invalidUrl: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.invalidUrl')),
+  emptyUrl: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.emptyUrl')),
+  existentUrl: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.existentUrl')),
+  invalidRssResource: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.invalidRssResource')),
+  networkError: (i18nInstance) => renderFeedback(i18nInstance.t('feedback.networkError')),
 };
 
-const renderHeader = () => {
+const renderHeaderText = (i18nInstance) => {
   elements.title.textContent = i18nInstance.t('title');
   elements.languageButton.textContent = i18nInstance.t('language');
   elements.header.textContent = i18nInstance.t('form.header');
@@ -76,8 +58,12 @@ const renderHeader = () => {
   elements.inputFieldLabel.textContent = i18nInstance.t('form.inputFieldLabel');
   elements.addButton.textContent = i18nInstance.t('form.addButton');
   elements.example.textContent = `${i18nInstance.t('form.example')} https://lorem-rss.hexlet.app/feed`;
+};
 
-  feedbackMapping[state.rss]();
+const renderHeader = (state, i18nInstance) => {
+  renderHeaderText(i18nInstance);
+
+  feedbackMapping[state.rss](i18nInstance);
 };
 
 const buildFeedHtmlElement = (title, description) => `
@@ -86,7 +72,7 @@ const buildFeedHtmlElement = (title, description) => `
     <p class="m-0 small text-black-50">${description}</p>
   </li>`;
 
-const renderFeeds = () => {
+const renderFeeds = (state, i18nInstance) => {
   elements.feedsAndPostsSection.classList.remove('d-none');
 
   const feedsHtml = Array.from(state.feeds).reverse().reduce((acc, feed) => {
@@ -105,7 +91,7 @@ const buildPostHtmlElement = (title, link) => `
     <button type="button" class="btn btn-outline-primary btn-sm" data-id="${link}" data-bs-toggle="modal" data-bs-target="#modal">Просмотр</button>
   </li>`;
 
-const renderPosts = () => {
+const renderPosts = (state, i18nInstance) => {
   const postsHtml = Array.from(state.posts).reverse().reduce((acc, post) => {
     let result = acc;
     result += buildPostHtmlElement(post.title, post.link);
@@ -127,11 +113,16 @@ const renderPosts = () => {
   });
 };
 
-const renderFooter = () => {
+const renderFooter = (i18nInstance) => {
   elements.createdBy.innerHTML = `${i18nInstance.t('createdBy')} <a href="https://github.com/drgoodness" target="_blank">drgoodness</a>`;
 };
 
-const renderModal = () => {
+const initText = (i18nInstance) => {
+  renderHeaderText(i18nInstance);
+  renderFooter(i18nInstance);
+};
+
+const renderModal = (state, i18nInstance) => {
   const post = Array.from(state.posts)
     .filter((p) => p.link === state.currentPostLink)[0];
   if (post) {
@@ -144,17 +135,17 @@ const renderModal = () => {
   }
 };
 
-const render = (path) => {
+const render = (path, state, i18nInstance) => {
   i18nInstance.changeLanguage(state.language);
-  renderHeader();
+  renderHeader(state, i18nInstance);
   if (state.feeds.size !== 0) {
-    renderFeeds();
-    renderPosts();
+    renderFeeds(state, i18nInstance);
+    renderPosts(state, i18nInstance);
     if (path.includes('currentPostLink')) {
-      renderModal();
+      renderModal(state, i18nInstance);
     }
   }
-  renderFooter();
+  renderFooter(i18nInstance);
 };
 
-export { elements, render };
+export { elements, initText, render };

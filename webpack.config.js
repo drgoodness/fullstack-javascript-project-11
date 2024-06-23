@@ -8,9 +8,9 @@ const dirname = path.dirname(filename);
 
 export default {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/js/main.js',
+  entry: './src/js/index.js',
   output: {
-    filename: 'main.js',
+    filename: 'index.js',
     path: path.resolve(dirname, 'dist'),
     clean: true,
   },
