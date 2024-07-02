@@ -3,23 +3,15 @@ import { rssStates } from './model/index.js';
 import fetchRss from './http.js';
 import getRss from './parser.js';
 
-const schema = yup.object({
-  rssLink: yup.string().url(),
+const getRssLinksFromFeeds = (state) => Array.from(state.feeds).map((feed) => feed.rssLink);
+
+const schema = (state) => yup.object({
+  rssLink: yup.string().required().url().notOneOf(getRssLinksFromFeeds(state)),
 });
 
 const loadRss = (rssLink, watchedState) => {
   const state = watchedState;
-  schema.validate({ rssLink })
-    .then(() => {
-      if (rssLink === '') {
-        throw Error(rssStates.emptyUrl);
-      }
-      state.feeds.forEach((feed) => {
-        if (feed.rssLink === rssLink) {
-          throw Error(rssStates.existentUrl);
-        }
-      });
-    })
+  schema(state).validate({ rssLink })
     .then(() => fetchRss(rssLink))
     .then((rssXml) => {
       const rss = getRss(rssXml, rssLink);
@@ -29,10 +21,10 @@ const loadRss = (rssLink, watchedState) => {
     })
     .catch((err) => {
       switch (err.message) {
-        case rssStates.emptyUrl:
+        case 'rssLink is a required field':
           state.rss = rssStates.emptyUrl;
           break;
-        case rssStates.existentUrl:
+        case `rssLink must not be one of the following values: ${rssLink}`:
           state.rss = rssStates.existentUrl;
           break;
         case rssStates.invalidRssResource:
@@ -48,10 +40,9 @@ const loadRss = (rssLink, watchedState) => {
 };
 
 const loadNewPosts = (state) => {
-  setTimeout(() => loadNewPosts(state), 5000);
-  state.feeds.forEach((feed) => {
+  const responsePromises = Array.from(state.feeds).map((feed) => {
     const { rssLink } = feed;
-    fetchRss(rssLink)
+    const responsePromise = fetchRss(rssLink)
       .then((rssXml) => {
         const rss = getRss(rssXml, rssLink);
         rss.posts.forEach((post) => {
@@ -63,7 +54,10 @@ const loadNewPosts = (state) => {
         });
       })
       .catch(() => console.error('Couldn\'t load new posts'));
+    return responsePromise;
   });
+  Promise.all(responsePromises)
+    .then(() => setTimeout(() => loadNewPosts(state), 5000));
 };
 
 export { loadRss, loadNewPosts };
